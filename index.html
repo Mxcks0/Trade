@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>Portfolio</title>
+<style>
+:root{
+  --green:#00C733;
+  --red:#FF1A1D;
+  --gray:#55575D;
+  --gray2:#4E5056;
+  --card:#121212;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:#000;height:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+  color:#fff;
+  -webkit-user-select:none;user-select:none;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.phone{
+  max-width:430px;margin:0 auto;min-height:100%;position:relative;
+  padding-bottom:130px;
+}
+[contenteditable]{
+  -webkit-user-select:text;user-select:text;
+  outline:none;caret-color:#fff;
+  touch-action:manipulation;
+}
+
+/* ---------- Statusleiste ---------- */
+.status{
+  height:54px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 30px 0 32px;font-size:16px;font-weight:600;letter-spacing:.2px;
+  padding-top:8px;
+}
+.status .left{display:flex;align-items:center;gap:7px}
+.status .right{display:flex;align-items:center;gap:6px}
+.island{
+  position:absolute;left:50%;top:11px;transform:translateX(-50%);
+  width:125px;height:36px;border-radius:18px;background:#000;
+}
+.bat{width:25px;height:13px;border:1.4px solid rgba(255,255,255,.45);border-radius:4px;position:relative}
+.bat:after{content:"";position:absolute;right:-3.5px;top:3.5px;width:2px;height:5px;background:rgba(255,255,255,.45);border-radius:0 2px 2px 0}
+.bat i{position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:70%;background:#fff;border-radius:2px;display:block}
+
+/* ---------- Header ---------- */
+.head{display:flex;align-items:center;padding:14px 16px 0}
+.tab{font-size:27px;font-weight:700;letter-spacing:-.7px}
+.tab.off{color:var(--gray2);margin-left:14px}
+.avatar{
+  margin-left:auto;width:34px;height:34px;border-radius:50%;
+  background:#2C2E33;color:#B9BBC0;font-size:15px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ---------- Kontostand ---------- */
+.sum{padding:24px 16px 0}
+.sumtop{display:flex;align-items:center}
+.sumlabel{font-size:16px;font-weight:600;color:var(--gray)}
+.chev{margin-left:auto;color:var(--gray);display:flex}
+.bal{display:flex;align-items:baseline;gap:11px;margin-top:2px}
+.bal .val{font-size:31px;font-weight:700;letter-spacing:-.9px}
+.chg{font-size:15px;font-weight:700;color:var(--green);white-space:nowrap}
+.chg.down{color:var(--red)}
+.chg .ar:after{content:"▲";font-size:11px;margin-right:3px;display:inline-block;vertical-align:1px}
+.chg.down .ar:after{content:"▼"}
+
+/* ---------- Zeitraum ---------- */
+.ranges{display:flex;gap:26px;padding:22px 20px 0;font-size:15px;font-weight:600;color:var(--gray)}
+.ranges .on{color:#fff}
+
+/* ---------- Chart ---------- */
+.chartwrap{position:relative;height:212px;margin-top:14px}
+.chartwrap svg{position:absolute;left:0;top:0;width:93%;height:100%;overflow:visible}
+.dotted{
+  position:absolute;left:0;right:16px;height:0;
+  border-top:2.5px dotted #3A3C42;
+}
+.ylab{
+  position:absolute;right:16px;transform:translateY(-50%);
+  font-size:12.5px;font-weight:600;color:var(--gray);
+}
+.xlabs{position:relative;height:22px;margin-top:8px}
+.xlabs span{position:absolute;font-size:12.5px;font-weight:600;color:var(--gray);transform:translateX(-50%)}
+
+/* ---------- Karten ---------- */
+.cards{display:flex;gap:10px;padding:22px 16px 0;overflow-x:auto;scrollbar-width:none}
+.cards::-webkit-scrollbar{display:none}
+.card{
+  flex:0 0 132px;height:72px;background:var(--card);border-radius:15px;
+  padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;
+}
+.card .t{font-size:15px;font-weight:600;color:var(--gray)}
+.card .v{font-size:15px;font-weight:700}
+.plus{
+  width:19px;height:19px;border-radius:50%;background:#2A2C31;color:#9A9CA2;
+  display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;line-height:1;
+}
+
+/* ---------- Investments ---------- */
+.secthead{display:flex;align-items:center;padding:32px 16px 4px}
+.secthead h2{font-size:17px;font-weight:700;letter-spacing:-.2px}
+.sort{margin-left:auto;font-size:15px;font-weight:600;color:var(--gray);display:flex;align-items:center;gap:6px}
+.row{display:flex;align-items:center;padding:11px 16px;gap:14px}
+.ico{position:relative;flex:0 0 32px;height:32px}
+.sq{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.badge{
+  position:absolute;left:-4px;bottom:-4px;width:15px;height:15px;border-radius:50%;
+  background:#000;display:flex;align-items:center;justify-content:center;
+}
+.meta{min-width:0;flex:1}
+.name{font-size:16px;font-weight:700;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sub{font-size:14px;font-weight:600;color:var(--gray);margin-top:2px}
+.row .chg{font-size:15.5px;margin-left:auto}
+
+.disc{padding:26px 16px 0;font-size:12.5px;line-height:1.45;color:#3E4046;font-weight:500}
+.disc b{color:#6A6C72;font-weight:700}
+
+/* ---------- Untere Leiste ---------- */
+.bottom{
+  position:fixed;left:0;right:0;bottom:0;max-width:430px;margin:0 auto;
+  display:flex;gap:10px;padding:0 16px 30px;pointer-events:none;
+}
+.pill{
+  flex:1;height:56px;background:#EAEAEA;border-radius:28px;color:#000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;font-size:16.5px;font-weight:700;letter-spacing:-.2px;
+}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <!-- Statusleiste -->
+  <div class="status">
+    <div class="left">
+      <span id="clock">19:57</span>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 8.7 3.1M6.2 6.2A6 6 0 0 0 6 8c0 7-3 9-3 9h13M10.3 21a1.94 1.94 0 0 0 3.4 0"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+    </div>
+    <div class="island"></div>
+    <div class="right">
+      <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#fff"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#fff"/><rect x="10" y="3" width="3" height="9" rx="1" fill="rgba(255,255,255,.35)"/><rect x="15" y="0" width="3" height="12" rx="1" fill="rgba(255,255,255,.35)"/></svg>
+      <svg width="17" height="12" viewBox="0 0 20 14" fill="#fff"><path d="M10 13.2 7.4 10.4a3.6 3.6 0 0 1 5.2 0L10 13.2Zm-5-5.4a8.1 8.1 0 0 1 10 0l-1.7 1.8a5.7 5.7 0 0 0-6.6 0L5 7.8ZM1.6 4.3a12.9 12.9 0 0 1 16.8 0l-1.7 1.9a10.4 10.4 0 0 0-13.4 0L1.6 4.3Z"/></svg>
+      <span class="bat"><i></i></span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="head">
+    <div class="tab">Portfolio</div>
+    <div class="tab off">Cash</div>
+    <div class="avatar">M</div>
+  </div>
+
+  <!-- Kontostand -->
+  <div class="sum">
+    <div class="sumtop">
+      <div class="sumlabel">Brokerage</div>
+      <div class="chev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="bal">
+      <div class="val" data-e data-num>2.812,32 €</div>
+      <div class="chg"><span class="ar"></span><span data-e data-num data-sign>5,48 %</span></div>
+    </div>
+  </div>
+
+  <!-- Zeitraum -->
+  <div class="ranges">
+    <span>1T</span><span>1W</span><span>1M</span><span>1J</span><span class="on">Max</span>
+  </div>
+
+  <!-- Chart -->
+  <div class="chartwrap">
+    <div class="dotted" style="top:63.4%"></div>
+    <svg viewBox="0 0 1000 478" preserveAspectRatio="none">
+      <polyline points="0.0,304.2 3.8,303.9 7.7,300.6 11.5,302.3 15.4,299.1 19.2,298.9 23.1,300.6 26.9,298.9 30.8,301.7 34.6,300.3 38.5,302.5 42.3,302.0 46.2,299.4 50.0,296.5 53.8,298.8 57.7,297.4 61.5,295.0 65.4,293.8 69.2,295.9 73.1,297.1 76.9,294.7 80.8,299.4 84.6,295.9 88.5,298.9 92.3,300.7 96.2,302.3 100.0,302.9 103.8,302.0 107.7,306.5 111.5,306.6 115.4,308.8 119.2,312.6 123.1,314.3 126.9,319.1 130.8,321.9 134.6,324.8 138.5,326.2 142.3,331.0 146.2,335.2 150.0,337.6 153.8,341.8 157.7,344.2 161.5,342.6 165.4,343.8 169.2,346.7 173.1,345.9 176.9,346.6 180.8,345.2 184.6,346.0 188.5,348.3 192.3,345.3 196.2,349.5 200.0,348.3 203.8,347.4 207.7,350.9 211.5,350.0 215.4,352.8 219.2,350.5 223.1,350.7 226.9,352.3 230.8,351.3 234.6,353.3 238.5,350.9 242.3,350.8 246.2,350.3 250.0,350.2 253.8,347.8 257.7,348.9 261.5,353.7 265.4,355.3 269.2,360.7 273.1,360.2 276.9,363.4 280.8,365.2 284.6,369.4 288.5,375.4 292.3,378.4 296.2,380.5 300.0,386.9 303.8,389.3 307.7,395.1 311.5,399.8 315.4,404.5 319.2,405.6 323.1,413.1 326.9,416.4 330.8,418.9 334.6,419.9 338.5,426.8 342.3,428.3 346.2,431.1 350.0,432.8 353.8,429.7 357.7,426.1 361.5,425.5 365.4,421.6 369.2,419.6 373.1,414.8 376.9,412.2 380.8,413.8 384.6,411.4 388.5,407.6 392.3,403.8 396.2,399.0 400.0,394.8 403.8,397.1 407.7,399.0 411.5,397.8 415.4,398.8 419.2,398.7 423.1,391.9 426.9,386.7 430.8,381.1 434.6,374.3 438.5,365.5 442.3,359.7 446.2,346.9 450.0,338.7 453.8,328.9 457.7,319.8 461.5,312.3 465.4,304.3 469.2,310.3 473.1,312.5 476.9,319.8 480.8,326.6 484.6,333.5 488.5,341.2 492.3,345.5 496.2,350.2 500.0,353.8 503.8,356.4 507.7,355.8 511.5,351.9 515.4,350.8 519.2,344.1 523.1,347.7 526.9,353.6 530.8,356.8 534.6,360.1 538.5,359.5 542.3,359.6 546.2,355.2 550.0,353.5 553.8,364.4 557.7,372.7 561.5,383.0 565.4,391.0 569.2,395.3 573.1,401.0 576.9,403.8 580.8,412.8 584.6,421.6 588.5,425.3 592.3,435.3 596.2,439.4 600.0,425.9 603.8,418.8 607.7,403.1 611.5,387.1 615.4,374.6 619.2,362.5 623.1,352.7 626.9,336.7 630.8,321.6 634.6,299.6 638.5,284.8 642.3,269.4 646.2,262.0 650.0,251.8 653.8,250.7 657.7,253.0 661.5,257.9 665.4,249.5 669.2,238.9 673.1,229.1 676.9,230.5 680.8,232.7 684.6,238.7 688.5,245.2 692.3,241.8 696.2,236.3 700.0,233.1 703.8,216.9 707.7,202.0 711.5,193.7 715.4,179.9 719.2,170.1 723.1,161.1 726.9,154.0 730.8,140.4 734.6,125.5 738.5,111.0 742.3,92.9 746.2,69.2 750.0,46.6 753.8,47.1 757.7,71.9 761.5,92.1 765.4,109.4 769.2,104.3 773.1,88.3 776.9,99.3 780.8,137.8 784.6,175.4 788.5,160.5 792.3,139.8 796.2,124.5 800.0,148.5 803.8,164.8 807.7,154.7 811.5,138.6 815.4,117.6 819.2,110.1 823.1,147.3 826.9,187.3 830.8,171.3 834.6,134.8 838.5,96.3 842.3,95.6 846.2,99.6 850.0,108.2 853.8,135.6 857.7,167.1 861.5,189.8 865.4,207.5 869.2,230.4 873.1,236.8 876.9,230.8 880.8,235.5 884.6,238.6 888.5,236.6 892.3,242.1 896.2,239.8 900.0,241.5 903.8,237.2 907.7,227.5 911.5,217.7 915.4,208.2 919.2,190.1 923.1,177.7 926.9,161.2 930.8,148.5 934.6,126.8 938.5,122.1 942.3,112.5 946.2,102.7 950.0,91.2 953.8,114.7 957.7,129.8 961.5,152.7 965.4,162.9 969.2,172.3 973.1,185.9 976.9,183.1 980.8,177.5 984.6,171.2 988.5,157.9 992.3,164.9 996.2,164.0 1000.0,163.6" fill="none" stroke="#00C733" stroke-width="2.6"
+                stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <div class="ylab" style="top:8.3%"  data-e data-num>11 %</div>
+    <div class="ylab" style="top:34.6%" data-e data-num>6,2 %</div>
+    <div class="ylab" style="top:63.4%" data-e data-num>0,95 %</div>
+    <div class="ylab" style="top:92.3%" data-e data-num>-4,3 %</div>
+  </div>
+  <div class="xlabs">
+    <span style="left:9%">März 25</span>
+    <span style="left:27%">Okt. 25</span>
+    <span style="left:46%">Jan</span>
+    <span style="left:64%">Apr</span>
+    <span style="left:83%">Aug</span>
+  </div>
+
+  <!-- Karten -->
+  <div class="cards">
+    <div class="card"><div class="t">Watchlist</div><div class="plus">+</div></div>
+    <div class="card"><div class="t">Sparpläne</div><div class="v" data-e data-num>220 €</div></div>
+    <div class="card"><div class="t">Order</div><div class="plus">+</div></div>
+    <div class="card"><div class="t">Zinsen</div><div class="plus">+</div></div>
+  </div>
+
+  <!-- Investments -->
+  <div class="secthead">
+    <h2>Investments</h2>
+    <div class="sort">Seit Kauf
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </div>
+
+  <div id="list"></div>
+
+  <div class="disc">
+    Die Wertentwicklung basiert auf dem jeweils letzten verfügbaren Kurs bzw. den unmittelbar
+    vorhergehenden Geldkurs der <b>Handelspartner</b> von Trade Republic. Die Wertentwicklung in
+    der Vergangenheit lässt keinen Rückschluss auf zukünftige Ergebnisse zu.
+  </div>
+</div>
+
+<!-- Untere Leiste -->
+<div class="bottom">
+  <div class="pill">Suche
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.2" y1="16.2" x2="21" y2="21"/></svg>
+  </div>
+  <div class="pill">Überweisen
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 9 12 4 17 9"/><polyline points="7 15 12 20 17 15"/></svg>
+  </div>
+</div>
+
+<script>
+/* ---------- Positionen ---------- */
+const REPEAT = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#8A8C92" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 3 21 9 15 9"/><path d="M20.5 15a9 9 0 1 1-2-9.5L21 8"/></svg>';
+
+const LOGOS = {
+  msci:'<div class="sq" style="background:#fff"><span style="color:#000;font:800 8.5px/1 -apple-system,Arial;letter-spacing:-.3px">MSCI</span></div>',
+  vaneck:'<div class="sq" style="background:#fff"><span style="color:#1428A0;font:800 8px/1 -apple-system,Arial;letter-spacing:-.4px">VanEck</span></div>',
+  t2:'<div class="sq" style="background:#fff"><span style="color:#000;font:900 15px/1 -apple-system,Arial;letter-spacing:-1px">T2</span></div>',
+  nvidia:'<div class="sq" style="background:#000"><svg width="30" height="18" viewBox="0 0 30 18"><ellipse cx="15" cy="9" rx="13" ry="6.5" fill="none" stroke="#76B900" stroke-width="2.2"/><ellipse cx="15" cy="9" rx="5" ry="4" fill="#76B900"/></svg></div>',
+  applovin:'<div class="sq" style="background:#000"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="#2B7FFF" stroke-width="1.6"><circle cx="13" cy="6" r="2.3"/><circle cx="6" cy="19" r="2.3"/><circle cx="20" cy="19" r="2.3"/><path d="M11.9 8.1 7.1 16.9M14.1 8.1l4.8 8.8M8.3 19h9.4"/></svg></div>'
+};
+
+const POS = [
+  {logo:'msci',     name:'MSCI ACWI USD (Acc)',        val:'1.044,41 €', chg:'54,41 €', up:true,  sp:false},
+  {logo:'msci',     name:'Core MSCI World USD (Acc)',  val:'843,83 €',   chg:'88,83 €', up:true,  sp:true },
+  {logo:'msci',     name:'Core MSCI EM IMI USD (Acc)', val:'381,03 €',   chg:'69,20 €', up:true,  sp:false},
+  {logo:'vaneck',   name:'Space Innovators USD (Acc)', val:'364,70 €',   chg:'38,70 €', up:true,  sp:true },
+  {logo:'t2',       name:'Take-Two Interactive',       val:'67,48 €',    chg:'8,52 €',  up:false, sp:false},
+  {logo:'nvidia',   name:'NVIDIA',                     val:'61,40 €',    chg:'11,40 €', up:true,  sp:false},
+  {logo:'applovin', name:'AppLovin',                   val:'49,45 €',    chg:'1,55 €',  up:false, sp:false}
+];
+
+document.getElementById('list').innerHTML = POS.map(p => `
+  <div class="row">
+    <div class="ico">${LOGOS[p.logo]}${p.sp ? `<div class="badge">${REPEAT}</div>` : ''}</div>
+    <div class="meta">
+      <div class="name" data-e>${p.name}</div>
+      <div class="sub" data-e data-num>${p.val}</div>
+    </div>
+    <div class="chg${p.up ? '' : ' down'}"><span class="ar"></span><span data-e data-num data-sign>${p.chg}</span></div>
+  </div>`).join('');
+
+/* ---------- Uhr ---------- */
+function tick(){
+  const d = new Date();
+  document.getElementById('clock').textContent =
+    d.getHours() + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+tick(); setInterval(tick, 10000);
+
+/* ---------- Verborgene Bearbeitung ---------- */
+let active = null;
+
+function open(el){
+  if(!el || active === el) return;
+  if(active) close(active);
+  active = el;
+  el.setAttribute('contenteditable','true');
+  el.focus();
+  const r = document.createRange();
+  r.selectNodeContents(el);
+  const s = getSelection();
+  s.removeAllRanges();
+  s.addRange(r);
+}
+
+function close(el){
+  el.removeAttribute('contenteditable');
+  let t = el.textContent.replace(/\s+/g,' ').trim();
+
+  if(el.hasAttribute('data-sign')){
+    const box = el.closest('.chg');
+    if(/^[-−–]/.test(t)){ box.classList.add('down');    t = t.replace(/^[-−–]\s*/,''); }
+    else if(/^\+/.test(t)){ box.classList.remove('down'); t = t.replace(/^\+\s*/,''); }
+  }
+  el.textContent = t;
+  getSelection().removeAllRanges();
+  if(active === el) active = null;
+}
+
+document.addEventListener('dblclick', e => {
+  const el = e.target.closest('[data-e]');
+  if(el) open(el);
+});
+
+/* Doppeltipp für Touch */
+let lastT = 0, lastEl = null;
+document.addEventListener('touchend', e => {
+  const el = e.target.closest('[data-e]');
+  const now = Date.now();
+  if(el && el === lastEl && now - lastT < 400){
+    e.preventDefault();
+    open(el);
+    lastT = 0; lastEl = null;
+    return;
+  }
+  lastT = now; lastEl = el;
+}, {passive:false});
+
+document.addEventListener('focusout', e => {
+  if(e.target.hasAttribute && e.target.hasAttribute('contenteditable')) close(e.target);
+});
+
+document.addEventListener('keydown', e => {
+  if(!active) return;
+  if(e.key === 'Enter'){ e.preventDefault(); active.blur(); }
+  if(e.key === 'Escape'){ active.blur(); }
+});
+
+document.addEventListener('pointerdown', e => {
+  if(active && !active.contains(e.target)) active.blur();
+});
+</script>
+</body>
+</html>
